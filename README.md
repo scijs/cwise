@@ -49,7 +49,7 @@ Here are a few recipes showing how to use cwise to implement some common operati
 
 ### Multiply an array with a scalar
 ```javascript
-var muls = function("cwise")(function(a, s) {
+var muls = require("cwise")(function(a, s) {
     a *= s
   }, { scalars: [1] })
   
@@ -59,12 +59,26 @@ muls(array, 2.0)
 
 ### Initialize an array with a grid with the first index
 ```javascript
-var mgrid = function("cwise")(function(index, a) {
+var mgrid = require("cwise")(function(index, a) {
   a = index[0]
 }, { index: 0 })
 
 //Usage:
 var X = mgrid(ndarray.zeros([128]))
+```
+
+### Check if any element is set
+```javascript
+var any = require("cwise")(function(a) {
+  if(a) {
+    return true
+  }
+}, { post: function() { return false } })
+
+//Usage
+if(any(array)) {
+  // ...
+}
 ```
 
 ### Apply a stencil to an array
@@ -97,6 +111,7 @@ var ndsum = require("cwise")(Function("a", "sum += a"), {
 s = ndsum(array)
 ```
 Note that `Function` objects are used instead of `function()` literals, since it is possible for minifiers to rename the variable `sum`
+
 
 ### Compute the index of the maximum element of an array:
 ```javascript

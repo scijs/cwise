@@ -1,0 +1,42 @@
+{
+  "name": "cwise",
+  "version": "0.0.0",
+  "description": "Component-wise map/reduce for ndarrays",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "falafel": "~0.1.6"
+  },
+  "devDependencies": {
+    "ndarray": "~0.0.2",
+    "tap": "~0.4.0"
+  },
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikolalysenko/cwise.git"
+  },
+  "keywords": [
+    "ndarray",
+    "component",
+    "scientific",
+    "computing",
+    "volume",
+    "image",
+    "array",
+    "typed",
+    "array",
+    "scalar",
+    "math",
+    "linear",
+    "algebra"
+  ],
+  "author": "Mikola Lysenko",
+  "license": "BSD",
+  "gitHead": "1dd03e72f1b0fbec4186e497b3956d87aec6fc15",
+  "readmeFilename": "README.md"
+}

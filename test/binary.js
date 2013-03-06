@@ -4,12 +4,13 @@ var cwise = require("../index.js")
 
 test("binary", function(t) {
 
-  var binary = cwise(function(a,b,t) {
-    t.equals(a, 0)
+  var binary = cwise(function(a,b,t,s,idx) {
+    t.equals(a, 0, "idx:"+idx+", shape:"+s)
     a = b + 1001
-  }, { scalars: [2] })
+  }, { scalars: [2,3], index: 4 })
   
   function testBinary1D(P, Q) {
+    console.log(P.shape, Q.shape)
     t.equals(P.shape[0], Q.shape[0])
     for(var i=0; i<P.shape[0]; ++i) {
       Q.set(i, i)
@@ -24,16 +25,23 @@ test("binary", function(t) {
   var A = ndarray.zeros([128], 'int32')
   var B = ndarray.zeros([128], 'int32')
   
-  /*
   testBinary1D(ndarray.zeros([0], 'int32'), ndarray.zeros([0], 'int32'))
   testBinary1D(ndarray.zeros([1], 'int32'), ndarray.zeros([1], 'int32'))
   testBinary1D(A, B)
   testBinary1D(A.lo(32), B.hi(128-32))
   testBinary1D(A.step(-1), B)
   testBinary1D(A, B.step(-1))
-  */
+  
+  
+  var X = ndarray.zeros([64,64], 'int32')
+  var Y = ndarray.zeros([64,64], 'int32')
+
   
   function testBinary2D(P, Q) {
+    for(var i=0; i<X.data.length; ++i) {
+      X.data[i] = -10000
+      Y.data[i] = -256
+    }
     console.log(P.shape, Q.shape)
     t.equals(P.shape[0], Q.shape[0])
     t.equals(P.shape[1], Q.shape[1])
@@ -43,7 +51,7 @@ test("binary", function(t) {
         P.set(i,j, 0)
       }
     }
-    binary(P, Q, t)
+    binary(P, Q, t, P.shape)
     for(var i=0; i<P.shape[0]; ++i) {
       for(var j=0; j<P.shape[1]; ++j) {
         t.equals(P.get(i,j), i*1000+j+1001)
@@ -51,8 +59,6 @@ test("binary", function(t) {
     }
   }
   
-  var X = ndarray.zeros([64,64], 'int32')
-  var Y = ndarray.zeros([64,64], 'int32')
   
   testBinary2D(X, Y)
   testBinary2D(X.transpose(1,0), Y.transpose(1,0))
