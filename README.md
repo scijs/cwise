@@ -30,6 +30,10 @@ for(var i=0; i<X.shape[0]; ++i) {
 }
 ```
 
+API
+===
+There are two ways to call the library:
+
 `require("cwise")(func[, options])`
 -----------------------------------
 Creates a component-wise n-ary map/reduce function.
@@ -42,6 +46,7 @@ Creates a component-wise n-ary map/reduce function.
     * `post` a function evaluated after the loop completes
 
 Returns a function implementing the component-wise operation
+
 
 Examples
 ========
