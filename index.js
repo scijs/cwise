@@ -1,14 +1,37 @@
 "use strict"
 
-var preprocessor = require("./lib/preprocessor.js")
-var shim = require("./lib/shim.js")
+var compile = require("./lib/compile.js")
 
-function compile(func, options) {
-  var proc = preprocessor(func, options || {})
-  if(proc.numArrayArgs() === 0) {
-    throw new Error("Invalid map/reduce procedure, no array arguments")
-  }
-  return shim(proc)
+function Builder(args) {
+  this._args = args
+  this._pre = null
+  this._body = null
+  this._post = null
+  this._options = {}
 }
 
-module.exports = compile
+Builder.prototype.begin = function(func) {
+  this._pre = func
+  return this
+}
+
+Builder.prototype.body = function(func) {
+  this._body = func
+  return this
+}
+
+Builder.prototype.end = function(func) {
+  this._post = func
+  return this
+}
+
+Builder.prototype.compile = function(options) {
+  this._options = options || {}
+  return compile(this)
+}
+
+function makeBuilder() {
+  return new Builder(Array.prototype.slice.call(arguments, 0))
+}
+
+module.exports = makeBuilder
