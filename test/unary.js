@@ -4,9 +4,11 @@ var cwise = require("../index.js")
 
 test("unary", function(t) {
 
-  var unary = cwise(function(a) {
-    ++a
-  })
+  var unary = cwise("array")
+    .body(function(a) {
+      ++a
+    })
+    .compile()
   
   function testUnary1D(arr) {
     //console.log(arr)

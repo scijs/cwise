@@ -4,10 +4,12 @@ var cwise = require("../index.js")
 
 test("binary", function(t) {
 
-  var binary = cwise(function(a,b,t,s,idx) {
-    t.equals(a, 0, "idx:"+idx+", shape:"+s)
-    a = b + 1001
-  }, { scalars: [2,3], index: 4 })
+  var binary = cwise("array", "array", "scalar", "shape", "index")
+    .body(function(a,b,t,s,idx) {
+      t.equals(a, 0, "idx:"+idx+", shape:"+s)
+      a = b + 1001
+    })
+    .compile()
   
   function testBinary1D(P, Q) {
     console.log(P.shape, Q.shape)
