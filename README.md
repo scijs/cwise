@@ -71,7 +71,7 @@ var X = mgrid(ndarray.zeros([128]))
 ### Check if any element is set
 ```javascript
 var any = cwise("array")
-  .begin(function(a) {
+  .body(function(a) {
     if(a) {
       return true
     }

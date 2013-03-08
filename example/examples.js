@@ -22,7 +22,7 @@ var X = mgrid(ndarray.zeros([128]))
 
 //Any
 var any = cwise("array")
-  .begin(function(a) {
+  .body(function(a) {
     if(a) {
       return true
     }
