@@ -16,11 +16,12 @@ var cwise = require("cwise")
   , ndarray = require("ndarray")
 
 //Create operation
-var addeq = cwise("array", "array")
-  .body(function(a, b) {
-    a += b
+var addeq = cwise({
+    args: ["array", "array"],
+    body: function(a, b) {
+      a += b
+    }
   })
-  .compile()
 
 //Create two 2D arrays
 var X = ndarray.zeros([128,128])
@@ -40,17 +41,53 @@ for(var i=0; i<X.shape[0]; ++i) {
 }
 ```
 
+
+`require("cwise")(user_args)`
+-----------------------------
+To use the library, you pass it an object with the following fields:
+
+* `args`: (Required) An array describing the type of the arguments passed to the body.  These may be one of the following:
+    + `"array"`: An `ndarray`-type argument
+    + `"scalar"`: A globally broadcasted scalar argument
+    + `"index"`: (Hidden) An array representing the current index of the element being processed.  Initially [0,0,...] in the pre block and set to some undefined value in the post block.
+    + `"shape"`: (Hidden) An array representing the shape of the arrays being processed
+* `pre`: A function to be executed before starting the loop
+* `body`: (Required) A function that gets applied to each element of the input arrays
+* `post`: Executed when loop completes
+
+The result is a procedure that you can call which executes these methods along the following lines:
+
+```javascript
+function(a0, a1, ...) {
+  pre()
+  for(var i=0; i<a0.shape[0]; ++i) {
+    for(var j=0; j<a0.shape[1]; ++j) {
+      ...
+      
+          body(a0[i,j,...], a1[i,j,...], ... )
+    }
+  }
+  post()
+}
+```
+
+### Notes
+* To pass variables between the pre/body/post, use `this.*`
+* The order in which variables get visited depends on the stride ordering if the input arrays.  In general it is not safe to assume that elements get visited (co)lexicographically.
+* If no return statement is specified, the first ndarray argument is returned
+
 Examples
 ========
 Here are a few recipes showing how to use cwise to implement some common operations to get you started:
 
 ### Multiply an array with a scalar
 ```javascript
-var muls = cwise("array", "scalar")
-  .body(function(a, s) {
+var muls = cwise({
+  args: ["array", "scalar"],
+  body: function(a, s) {
     a *= s
-  })
-  .compile()
+  }
+})
 
 //Example usage:
 muls(array, 2.0)
@@ -58,11 +95,12 @@ muls(array, 2.0)
 
 ### Initialize an array with a grid with the first index
 ```javascript
-var mgrid = cwise("index", "array")
-  .body(function(i, a) {
+var mgrid = cwise({
+  args: ["index", "array"],
+  body: function(i, a) {
     a = i[0]
-  })
-  .compile()
+  }
+})
 
 //Example usage:
 var X = mgrid(ndarray.zeros([128]))
@@ -70,16 +108,17 @@ var X = mgrid(ndarray.zeros([128]))
 
 ### Check if any element is set
 ```javascript
-var any = cwise("array")
-  .body(function(a) {
+var any = cwise({
+  args: ["array"],
+  body: function(a) {
     if(a) {
       return true
     }
-  })
-  .end(function() {
+  },
+  post: function() {
     return false
-  })
-  .compile()
+  }
+})
 
 //Usage
 if(any(array)) {
@@ -89,11 +128,12 @@ if(any(array)) {
 
 ### Apply a stencil to an array
 ```javascript
-var lap_op = cwise("array", "array", "array", "array", "array", "array")
-  .body(function(a, c, n, s, e, w) {
+var lap_op = cwise({
+  args: ["array", "array", "array", "array", "array", "array"],
+  body: function(a, c, n, s, e, w) {
     a = 0.25 * (n + s + e + w) - c
-  })
-  .compile()
+  }
+})
 
 function laplacian(dest, src) {
   lap_op(dest.hi(dest.shape[0]-1,dest.shape[1]-1).lo(1,1)
@@ -110,17 +150,18 @@ laplacian(next, prev)
 
 ### Compute the sum of all the elements in an array
 ```javascript
-var sum = cwise("array")
-  .begin(function() {
+var sum = cwise({
+  args: ["array"],
+  pre: function() {
     this.sum = 0
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     this.sum += a
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.sum
-  })
-  .compile()
+  }
+})
   
 //Usage:
 s = sum(array)
@@ -130,23 +171,24 @@ Note that variables stored in `this` are common to all the blocks
 
 ### Compute the index of the maximum element of an array:
 ```javascript
-var argmin = cwise("index", "array")
-  .begin(function(index) {
+var argmin = cwise({
+  args: ["index", "array"],
+  pre: function(index) {
     this.min_v = Number.POSITIVE_INFINITY
     this.min_index = index.slice(0)
-  })
-  .body(function(index, a) {
+  },
+  body: function(index, a) {
     if(a < this.min_v) {
       this.min_v = a
       for(var i=0; i<index.length; ++i) {
         this.min_index[i] = index[i]
       }
     }
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.min_index
-  })
-  .compile()
+  }
+})
 
 //Usage:
 argmin(X)
