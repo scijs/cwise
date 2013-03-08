@@ -75,6 +75,7 @@ function(a0, a1, ...) {
 * To pass variables between the pre/body/post, use `this.*`
 * The order in which variables get visited depends on the stride ordering if the input arrays.  In general it is not safe to assume that elements get visited (co)lexicographically.
 * If no return statement is specified, the first ndarray argument is returned
+* All input arrays must have the same shape.  If not, then the library will throw an error
 
 Examples
 ========
