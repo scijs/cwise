@@ -1,21 +1,17 @@
+//Import libraries
 var cwise = require("../index.js")
+  , ndarray = require("ndarray")
 
-var moments = cwise("array")
-  .begin(function() {
-    this.moments = [0,0,0]
-    this.stuff = 0
+//Create operation
+var addeq = cwise("array", "array")
+  .body(function(a, b) {
+    a += b
   })
-  .body(function(a) {
-    this   .moments[0] += 1;
-    this .moments[1] += a;
-    this.moments[2] += a*a;
-  })
-  .end(function() {
-    return this.moments
-  })
-  .compile({ printCode: true })
+  .compile()
 
+//Create two 2D arrays
+var X = ndarray.zeros([128,128])
+var Y = ndarray.zeros([128,128])
 
-var array = require("ndarray").zeros([128,128])
-
-console.log(moments(array))
+//Add them together
+addeq(X, Y)

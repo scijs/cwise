@@ -130,9 +130,9 @@ Note that variables stored in `this` are common to all the blocks
 
 ### Compute the index of the maximum element of an array:
 ```javascript
-var argmin = cwise("index", "a")
+var argmin = cwise("index", "array")
   .begin(function(index) {
-    this.min_v = a
+    this.min_v = Number.POSITIVE_INFINITY
     this.min_index = index.slice(0)
   })
   .body(function(index, a) {
