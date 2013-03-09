@@ -4,7 +4,7 @@ var Parser = require("./lib/parser.js")
   , createShim = require("./lib/shim.js")
 
 var REQUIRED_FIELDS = [ "args", "body" ]
-var OPTIONAL_FIELDS = [ "pre", "post", "unroll", "printCode" ]
+var OPTIONAL_FIELDS = [ "pre", "post", "printCode" ]
 
 function CompiledProcedure() {
   this.numArgs = 0
@@ -74,7 +74,6 @@ function compile(user_args) {
   proc.hasReturn = parser.hasReturn
   
   //Parse options
-  proc.unroll = user_args.unroll || 1
   proc.printCode = user_args.printCode || false
   
   //Assemble shim
