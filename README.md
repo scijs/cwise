@@ -200,7 +200,7 @@ FAQ
 
 Is it fast?
 -----------
-Yes. [Citation needed]
+[Yes](https://github.com/mikolalysenko/ndarray-experiments)
 
 How does it work?
 -----------------
