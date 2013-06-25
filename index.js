@@ -1,83 +1,85 @@
 "use strict"
 
-var Parser = require("./lib/parser.js")
-  , createShim = require("./lib/shim.js")
+var parse = require("cwise-parser")
+var createThunk = require("./lib/thunk.js")
 
 var REQUIRED_FIELDS = [ "args", "body" ]
-var OPTIONAL_FIELDS = [ "pre", "post", "printCode" ]
+var OPTIONAL_FIELDS = [ "pre", "post", "printCode", "funcName" ]
 
-function CompiledProcedure() {
-  this.numArgs = 0
-  this.numArrayArgs = 0
-  this.numScalarArgs = 0
-  this.hasIndex = false
-  this.hasShape = false
-  this.hasReturn = false
-  this.pre = ""
-  this.body = ""
-  this.post = ""
-  this.unroll = 1
-  this.printCode = false
+function Procedure() {
+  this.argTypes = []
+  this.shimArgs = []
+  this.arrayArgs = []
+  this.scalarArgs = []
+  this.indexArgs = []
+  this.shapeArgs = []
+  this.funcName = ""
+  this.pre = null
+  this.body = null
+  this.post = null
+  this.debug = false
 }
 
-function compile(user_args) {
+function createCWise(user_args) {
+
+  //Check parameters
   for(var id in user_args) {
     if(REQUIRED_FIELDS.indexOf(id) < 0 &&
        OPTIONAL_FIELDS.indexOf(id) < 0) {
-      throw new Error("Unknown argument '"+id+"' passed to expression compiler")
+      throw new Error("cwise: Unknown argument '"+id+"' passed to expression compiler")
     }
   }
   for(var i=0; i<REQUIRED_FIELDS.length; ++i) {
     if(!user_args[REQUIRED_FIELDS[i]]) {
-      throw new Error("Missing argument: " + REQUIRED_FIELDS[i])
+      throw new Error("cwise: Missing argument: " + REQUIRED_FIELDS[i])
     }
   }
+  
+  //Create procedure
+  var proc = new Procedure()
+  
   //Parse arguments
-  var proc = new CompiledProcedure()
   var proc_args = user_args.args.slice(0)
-  var shim_args = []
+  proc.argTypes = proc_args
   for(var i=0; i<proc_args.length; ++i) {
     switch(proc_args[i]) {
       case "array":
-        shim_args.push("array" + proc.numArrayArgs)
-        proc_args[i] += (proc.numArrayArgs++)
+        proc.arrayArgs.push(i)
+        proc.shimArgs.push("array" + i)
       break
       case "scalar":
-        shim_args.push("scalar" + proc.numScalarArgs)
-        proc_args[i] += (proc.numScalarArgs++)
+        proc.scalarArgs.push(i)
+        proc.shimArgs.push("scalar" + i)
       break
       case "index":
-        proc.hasIndex = true
+        proc.indexArgs.push(i)
       break
       case "shape":
-        proc.hasShape = true
+        proc.shapeArgs.push(i)
       break
       default:
-        throw new Error("Unknown argument types")
+        throw new Error("cwise: Unknown argument type " + proc_args[i])
     }
   }
-  if(proc.numArrayArgs <= 0) {
-    throw new Error("No array arguments specified")
+  
+  //Make sure at least one array argument was specified
+  if(proc.arrayArgs.length <= 0) {
+    throw new Error("cwise: No array arguments specified")
   }
   
   //Parse blocks
-  var parser = new Parser(proc_args)
-    , pre = user_args.pre || null
-    , body = user_args.body
-    , post = user_args.post || null
-  parser.preprocess(pre)
-  parser.preprocess(body)
-  parser.preprocess(post)
-  proc.pre  = parser.preBlock() + "\n" + parser.process(pre)
-  proc.body = parser.process(body)
-  proc.post = parser.process(post) + "\n" + parser.postBlock()
-  proc.hasReturn = parser.hasReturn
+  proc.pre    = parse(user_args.pre || function(){})
+  proc.body   = parse(user_args.body)
+  proc.post   = parse(user_args.post || function(){})
   
-  //Parse options
-  proc.printCode = user_args.printCode || false
+  //Check debug flag
+  proc.debug  = !!user_args.printCode
   
-  //Assemble shim
-  return createShim(shim_args, proc)
+  //Retrieve name
+  proc.funcName = user_args.funcName || user_args.body.name
+  
+  //Assemble thunk
+  return createThunk(proc)
 }
 
-module.exports = compile
+module.exports = createCWise
