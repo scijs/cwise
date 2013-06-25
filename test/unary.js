@@ -22,7 +22,7 @@ test("unary", function(t) {
     }
   }
   
-  var simple_zeros = ndarray.zeros([4096], "int32")
+  var simple_zeros = ndarray(new Int32Array(4096))
   
   testUnary1D(simple_zeros.hi(0))
   testUnary1D(simple_zeros.hi(1))
@@ -50,7 +50,7 @@ test("unary", function(t) {
     }
   }
   
-  var M = ndarray.zeros([128,128], "int32")
+  var M = ndarray(new Int32Array(128*128), [128,128])
   testUnary2D(M)
   testUnary2D(M.hi(10, 10))
   testUnary2D(M.lo(100,1))
