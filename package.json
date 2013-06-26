@@ -1,6 +1,6 @@
 {
   "name": "cwise",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Component-wise map/reduce for ndarrays",
   "main": "cwise.js",
   "directories": {
