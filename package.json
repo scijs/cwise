@@ -2,7 +2,7 @@
   "name": "cwise",
   "version": "0.1.2",
   "description": "Component-wise map/reduce for ndarrays",
-  "main": "index.js",
+  "main": "cwise.js",
   "directories": {
     "test": "test"
   },
