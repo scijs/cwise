@@ -7,7 +7,8 @@
     "test": "test"
   },
   "dependencies": {
-    "cwise-parser": "~0.0.0"
+    "cwise-parser": "~0.0.0",
+    "uniq": "~0.0.2"
   },
   "devDependencies": {
     "ndarray": "~1.0.0",
