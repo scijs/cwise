@@ -1,4 +1,4 @@
-var cwise = require("../index.js")
+var cwise = require("../cwise.js")
 var ndarray = require("ndarray")
 
 var F0 = ndarray(new Float32Array(512*512), [512, 512]).transpose(1, 0)

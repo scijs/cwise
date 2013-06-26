@@ -1,6 +1,14 @@
-var cwise = require("../index.js")
+var cwise = require("../cwise.js")
   , ndarray = require("ndarray")
   , test = require("tap").test
+
+function DumbStorage(n) {
+  this.data = new Int32Array(n)
+  this.length = n
+}
+DumbStorage.prototype.get = function(i) { return this.data[i] }
+DumbStorage.prototype.set = function(i, v) { return this.data[i]=v }
+
 
 test("binary", function(t) {
 
@@ -35,15 +43,25 @@ test("binary", function(t) {
   testBinary1D(A.step(-1), B)
   testBinary1D(A, B.step(-1))
   
+  A = ndarray(new DumbStorage(128))
+  B = ndarray(new DumbStorage(128))
+  testBinary1D(ndarray(new DumbStorage(0)), ndarray(new DumbStorage(0)))
+  testBinary1D(ndarray(new DumbStorage(1)), ndarray(new DumbStorage(1)))
+  testBinary1D(A, B)
+  testBinary1D(A.lo(32), B.hi(128-32))
+  testBinary1D(A.step(-1), B)
+  testBinary1D(A, B.step(-1))
+    
   
   var X = ndarray(new Int32Array(64*64), [64,64])
   var Y = ndarray(new Int32Array(64*64), [64,64])
-
   
   function testBinary2D(P, Q) {
-    for(var i=0; i<X.data.length; ++i) {
-      X.data[i] = -10000
-      Y.data[i] = -256
+    for(var i=0; i<X.shape[0]; ++i) {
+      for(var j=0; j<X.shape[1]; ++j) {
+        X.set(i,j,-10000)
+        Y.set(i,j,-256)
+      }
     }
     console.log(P.shape, Q.shape)
     t.equals(P.shape[0], Q.shape[0])

@@ -4,7 +4,7 @@ var parse = require("cwise-parser")
 var createThunk = require("./lib/thunk.js")
 
 var REQUIRED_FIELDS = [ "args", "body" ]
-var OPTIONAL_FIELDS = [ "pre", "post", "printCode", "funcName" ]
+var OPTIONAL_FIELDS = [ "pre", "post", "printCode", "funcName", "blockSize" ]
 
 function Procedure() {
   this.argTypes = []
@@ -110,6 +110,9 @@ function createCWise(user_args) {
   
   //Retrieve name
   proc.funcName = user_args.funcName || user_args.body.name || "cwise"
+  
+  //Read in block size
+  proc.blockSize = user_args.blockSize || 32
   
   //Assemble thunk
   return createThunk(proc)
