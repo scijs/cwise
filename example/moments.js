@@ -16,6 +16,6 @@ var moments = cwise({
   }
 })
 
-var array = require("ndarray").zeros([128,128])
+var array = require("ndarray")(new Float32Array(128*128), [128,128])
 
 console.log(moments(array))

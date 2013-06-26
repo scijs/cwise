@@ -11,8 +11,8 @@ var addeq = cwise({
   })
 
 //Create two 2D arrays
-var X = ndarray.zeros([128,128])
-var Y = ndarray.zeros([128,128])
+var X = ndarray(new Float32Array(128*128), [128,128])
+var Y = ndarray(new Float32Array(128*128), [128,128])
 
 //Add them together
 addeq(X, Y)

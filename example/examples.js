@@ -1,8 +1,8 @@
 var cwise = require("../index.js")
 var ndarray = require("ndarray")
-var array = ndarray.zeros([128, 128])
-var next = ndarray.zeros([128,128])
-var prev = ndarray.zeros([128,128])
+var array = ndarray(new Float32Array(128*128), [128, 128])
+var next = ndarray(new Float32Array(128*128), [128,128])
+var prev = ndarray(new Float32Array(128*128), [128,128])
 
 //Multiply scalar
 var muls = cwise({
@@ -20,7 +20,7 @@ var mgrid = cwise({
     a = i[0]
   }
 })
-var X = mgrid(ndarray.zeros([128]))
+var X = mgrid(ndarray(new Float32Array(128)))
 
 //Any
 var any = cwise({
@@ -48,11 +48,11 @@ var lap_op = cwise({
 
 function laplacian(dest, src) {
   lap_op(dest.hi(dest.shape[0]-1,dest.shape[1]-1).lo(1,1)
-      , src.hi(src.shape[0]-1,src.shape[0]-1).lo(1,1)
-      , src.hi(src.shape[0]-1,src.shape[0]).lo(1,0)
-      , src.hi(src.shape[0]-1,src.shape[0]-2).lo(1,2)
-      , src.hi(src.shape[0]-2,src.shape[0]-1).lo(0,1)
-      , src.hi(src.shape[0],src.shape[0]-1).lo(2,1))
+      , src.hi(src.shape[0]-1,src.shape[1]-1).lo(1,1)
+      , src.hi(src.shape[0]-1,src.shape[1]-2).lo(1,0)
+      , src.hi(src.shape[0]-1,src.shape[1]).lo(1,2)
+      , src.hi(src.shape[0]-2,src.shape[1]-1).lo(0,1)
+      , src.hi(src.shape[0],src.shape[1]-1).lo(2,1))
 }
 
 laplacian(next, prev)
@@ -75,10 +75,10 @@ s = sum(array)
 
 //Argmin
 var argmin = cwise({
-  args:["index", "array"],
-  pre: function(index) {
+  args:["index", "array", "shape"],
+  pre: function(i, a, s) {
     this.min_v = Number.POSITIVE_INFINITY
-    this.min_index = index.slice(0)
+    this.min_index = s.slice(0)
   },
   body: function(index, a) {
     if(a < this.min_v) {
@@ -92,7 +92,5 @@ var argmin = cwise({
     return this.min_index
   }
 })
-argmin(X)
-
-
+argmin(array)
 

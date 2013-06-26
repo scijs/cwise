@@ -25,19 +25,19 @@ test("binary", function(t) {
     }
   }
   
-  var A = ndarray.zeros([128], 'int32')
-  var B = ndarray.zeros([128], 'int32')
+  var A = ndarray(new Int32Array(128))
+  var B = ndarray(new Int32Array(128))
   
-  testBinary1D(ndarray.zeros([0], 'int32'), ndarray.zeros([0], 'int32'))
-  testBinary1D(ndarray.zeros([1], 'int32'), ndarray.zeros([1], 'int32'))
+  testBinary1D(ndarray(new Int32Array(0)), ndarray(new Int32Array(0)))
+  testBinary1D(ndarray(new Int32Array(1)), ndarray(new Int32Array(1)))
   testBinary1D(A, B)
   testBinary1D(A.lo(32), B.hi(128-32))
   testBinary1D(A.step(-1), B)
   testBinary1D(A, B.step(-1))
   
   
-  var X = ndarray.zeros([64,64], 'int32')
-  var Y = ndarray.zeros([64,64], 'int32')
+  var X = ndarray(new Int32Array(64*64), [64,64])
+  var Y = ndarray(new Int32Array(64*64), [64,64])
 
   
   function testBinary2D(P, Q) {
