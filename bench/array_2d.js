@@ -1,10 +1,10 @@
 var cwise = require("../index.js")
 var ndarray = require("ndarray")
 
-var F0 = ndarray.zeros([512, 512], 'float32', [0,1])
-var F1 = ndarray.zeros([512, 512], 'float32', [0,1])
-var C0 = ndarray.zeros([512, 512], 'float32', [1,0])
-var C1 = ndarray.zeros([512, 512], 'float32', [1,0])
+var F0 = ndarray(new Float32Array(512*512), [512, 512]).transpose(1, 0)
+var F1 = ndarray(new Float32Array(512*512), [512, 512]).transpose(1, 0)
+var C0 = ndarray(new Float32Array(512*512), [512, 512])
+var C1 = ndarray(new Float32Array(512*512), [512, 512])
 
 var init_op = cwise({
   args: ["array"],
