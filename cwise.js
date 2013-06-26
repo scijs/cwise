@@ -26,7 +26,7 @@ function createCWise(user_args) {
   for(var id in user_args) {
     if(REQUIRED_FIELDS.indexOf(id) < 0 &&
        OPTIONAL_FIELDS.indexOf(id) < 0) {
-      throw new Error("cwise: Unknown argument '"+id+"' passed to expression compiler")
+      console.warn("cwise: Unknown argument '"+id+"' passed to expression compiler")
     }
   }
   for(var i=0; i<REQUIRED_FIELDS.length; ++i) {

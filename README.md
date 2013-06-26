@@ -54,6 +54,9 @@ To use the library, you pass it an object with the following fields:
 * `pre`: A function to be executed before starting the loop
 * `body`: (Required) A function that gets applied to each element of the input arrays
 * `post`: Executed when loop completes
+* `printCode`: If this flag is set, then log all generated code
+* `blockSize`: The size of a block (default 32)
+* `funcName`: The name to give to the generated procedure for debugging/profiling purposes.  (Default is `body.name||"cwise"`)
 
 The result is a procedure that you can call which executes these methods along the following lines:
 
