@@ -1,4 +1,4 @@
-var cwise = require("../index.js")
+var cwise = require("../cwise.js")
 
 var moments = cwise({
   args: ["array"]

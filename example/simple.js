@@ -1,5 +1,5 @@
 //Import libraries
-var cwise = require("../index.js")
+var cwise = require("../cwise.js")
   , ndarray = require("ndarray")
 
 //Create operation
