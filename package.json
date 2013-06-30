@@ -11,7 +11,7 @@
     "uniq": "~0.0.2"
   },
   "devDependencies": {
-    "ndarray": "~1.0.0",
+    "ndarray": "~1.0.1",
     "tap": "~0.4.0"
   },
   "scripts": {
