@@ -1,13 +1,13 @@
 {
   "name": "cwise",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Component-wise map/reduce for ndarrays",
   "main": "cwise.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "cwise-parser": "~0.0.0",
+    "cwise-parser": "~0.0.1",
     "uniq": "~0.0.2"
   },
   "devDependencies": {

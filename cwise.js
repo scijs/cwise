@@ -112,7 +112,7 @@ function createCWise(user_args) {
   proc.funcName = user_args.funcName || user_args.body.name || "cwise"
   
   //Read in block size
-  proc.blockSize = user_args.blockSize || 32
+  proc.blockSize = user_args.blockSize || 64
   
   //Assemble thunk
   return createThunk(proc)
