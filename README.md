@@ -211,4 +211,4 @@ You can think of cwise as a type of macro language on top of JavaScript.  Intern
 
 Credits
 =======
-(c) 2013 Mikola Lysenko.  BSD License
+(c) 2013 Mikola Lysenko. MIT License
