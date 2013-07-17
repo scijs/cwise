@@ -2,6 +2,8 @@ cwise
 =====
 This library can be used to generate cache efficient map/reduce operations for [ndarrays](http://github.com/mikolalysenko/ndarray).
 
+[![stable](https://rawgithub.com/hughsk/stability-badges/master/dist/stable.svg)](http://github.com/hughsk/stability-badges)
+
 Usage
 =====
 First, install using npm:
