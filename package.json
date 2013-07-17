@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "cwise-parser": "~0.0.1",
-    "cwise-compiler": "~0.0.0"
+    "cwise-compiler": "~0.1.0"
   },
   "devDependencies": {
     "ndarray": "~1.0.1",

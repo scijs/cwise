@@ -53,6 +53,9 @@ To use the library, you pass it an object with the following fields:
     + `"scalar"`: A globally broadcasted scalar argument
     + `"index"`: (Hidden) An array representing the current index of the element being processed.  Initially [0,0,...] in the pre block and set to some undefined value in the post block.
     + `"shape"`: (Hidden) An array representing the shape of the arrays being processed
+    + (Hidden) An object containing two properties reprsenting an offset pointer from an array argument.
+        + `offset` An array representing the relative offset of the object
+        + `array` The index of an array parameter
 * `pre`: A function to be executed before starting the loop
 * `body`: (Required) A function that gets applied to each element of the input arrays
 * `post`: Executed when loop completes
