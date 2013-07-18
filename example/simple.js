@@ -7,7 +7,8 @@ var addeq = cwise({
     args: ["array", "array"],
     body: function(a, b) {
       a += b
-    }
+    },
+    printCode: true
   })
 
 //Create two 2D arrays

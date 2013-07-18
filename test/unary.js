@@ -19,7 +19,7 @@ test("unary", function(t) {
   })
   
   function testUnary1D(arr) {
-    //console.log(arr)
+    console.log(arr.shape.toString())
     for(var i=0; i<arr.shape[0]; ++i) {
       arr.set(i, i)
     }

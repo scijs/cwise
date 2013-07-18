@@ -39,21 +39,12 @@ if(any(array)) {
 }
 
 //Laplacian
-var lap_op = cwise({
-  args:["array", "array", "array", "array", "array", "array"],
+var laplacian = cwise({
+  args:["array", "array", {offset:[0,1], array:1}, {offset:[0,-1], array:1}, {offset:[1,0], array:1}, {offset:[-1,0], array:1}],
   body:function(a, c, n, s, e, w) {
     a = 0.25 * (n + s + e + w) - c
   }
 })
-
-function laplacian(dest, src) {
-  lap_op(dest.hi(dest.shape[0]-1,dest.shape[1]-1).lo(1,1)
-      , src.hi(src.shape[0]-1,src.shape[1]-1).lo(1,1)
-      , src.hi(src.shape[0]-1,src.shape[1]-2).lo(1,0)
-      , src.hi(src.shape[0]-1,src.shape[1]).lo(1,2)
-      , src.hi(src.shape[0]-2,src.shape[1]-1).lo(0,1)
-      , src.hi(src.shape[0],src.shape[1]-1).lo(2,1))
-}
 
 laplacian(next, prev)
 
