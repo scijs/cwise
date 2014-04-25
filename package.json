@@ -2,13 +2,15 @@
   "name": "cwise",
   "version": "0.4.0",
   "description": "Component-wise map/reduce for ndarrays",
-  "main": "cwise.js",
+  "main": "node.js",
+  "browser": "browser.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
     "cwise-parser": "~0.0.1",
-    "cwise-compiler": "~0.1.0"
+    "cwise-compiler": "~0.1.0",
+    "static-module": "0.0.6"
   },
   "devDependencies": {
     "ndarray": "~1.0.1",
