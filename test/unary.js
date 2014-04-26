@@ -1,6 +1,9 @@
-var cwise = require("../cwise.js")
+var cwise = require("cwise")
   , ndarray = require("ndarray")
-  , test = require("tap").test
+
+if(typeof test === "undefined") {
+  test = require("tape")
+}
 
 function DumbStorage(n) {
   this.data = new Int32Array(n)
@@ -19,7 +22,6 @@ test("unary", function(t) {
   })
   
   function testUnary1D(arr) {
-    console.log(arr.shape.toString())
     for(var i=0; i<arr.shape[0]; ++i) {
       arr.set(i, i)
     }

@@ -1,6 +1,9 @@
-var cwise = require("../cwise.js")
+var cwise = require("cwise")
   , ndarray = require("ndarray")
-  , test = require("tap").test
+
+if(typeof test === "undefined") {
+  test = require("tape")
+}
 
 function DumbStorage(n) {
   this.data = new Int32Array(n)

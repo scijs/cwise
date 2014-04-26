@@ -44,6 +44,7 @@ for(var i=0; i<X.shape[0]; ++i) {
 ```
 
 
+
 `require("cwise")(user_args)`
 -----------------------------
 To use the library, you pass it an object with the following fields:
@@ -84,6 +85,23 @@ function(a0, a1, ...) {
 * The order in which variables get visited depends on the stride ordering if the input arrays.  In general it is not safe to assume that elements get visited (co)lexicographically.
 * If no return statement is specified, the first ndarray argument is returned
 * All input arrays must have the same shape.  If not, then the library will throw an error
+
+### As a browserify transform
+
+If bundle size is an issue for you, it is possible to use cwise as a [browserify transform](http://browserify.org/), thus avoiding the potentially large parser dependencies.  To do this, add the following lines to your package.json:
+
+```javascript
+//Contents of package.json
+{
+    // ...
+
+    browser: {
+      transform: [ "cwise" ]
+    }
+
+    // ...
+}
+```
 
 Examples
 ========
