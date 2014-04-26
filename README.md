@@ -43,8 +43,6 @@ for(var i=0; i<X.shape[0]; ++i) {
 }
 ```
 
-
-
 `require("cwise")(user_args)`
 -----------------------------
 To use the library, you pass it an object with the following fields:
@@ -102,6 +100,8 @@ If bundle size is an issue for you, it is possible to use cwise as a [browserify
     // ...
 }
 ```
+
+Then when you use the module with browserify, only the cwise-compile submodule will get loaded into your script instead of all of esprima. Note that this step is optional and the library will still work in the browser even if you don't use a transform.
 
 Examples
 ========
