@@ -24,7 +24,6 @@ test("binary", function(t) {
   })
   
   function testBinary1D(P, Q) {
-    console.log(P.shape.toString(), Q.shape.toString())
     t.equals(P.shape[0], Q.shape[0])
     for(var i=0; i<P.shape[0]; ++i) {
       Q.set(i, i)
@@ -66,7 +65,6 @@ test("binary", function(t) {
         Y.set(i,j,-256)
       }
     }
-    console.log(P.shape.toString(), Q.shape.toString())
     t.equals(P.shape[0], Q.shape[0])
     t.equals(P.shape[1], Q.shape[1])
     for(var i=0; i<P.shape[0]; ++i) {

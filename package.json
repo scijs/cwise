@@ -1,7 +1,7 @@
 {
   "name": "cwise",
   "version": "1.0.0",
-  "description": "Component-wise map/reduce for ndarrays",
+  "description": "Component-wise operations on ndarrays",
   "main": "cwise.js",
   "browser": "lib/cwise-esprima.js",
   "directories": {
@@ -21,7 +21,7 @@
   },
   "scripts": {
     "test": "tape test/*.js",
-    "pretest": "ln -s node_modules/.. node_modules/cwise"
+    "pretest": "rm -rf node_modules/cwise && ln -s .. node_modules/cwise"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,14 @@
     "scalar",
     "math",
     "linear",
-    "algebra"
+    "algebra",
+    "signal",
+    "operation",
+    "scan",
+    "map",
+    "reduce",
+    "cache",
+    "arithmetic"
   ],
   "author": "Mikola Lysenko",
   "license": "MIT",
