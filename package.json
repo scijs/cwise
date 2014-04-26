@@ -12,7 +12,7 @@
     "cwise-compiler": "~0.1.0",
     "static-module": "^0.0.6",
     "through2": "^0.4.1",
-    "uglify-js": "^2.4.13"
+    "uglify-js": "2.4.13"
   },
   "devDependencies": {
     "ndarray": "^1.0.13",
