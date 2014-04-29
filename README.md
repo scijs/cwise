@@ -93,8 +93,8 @@ If bundle size is an issue for you, it is possible to use cwise as a [browserify
 {
     // ...
 
-    browser: {
-      transform: [ "cwise" ]
+    "browserify": {
+      "transform": [ "cwise" ]
     }
 
     // ...
