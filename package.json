@@ -1,6 +1,6 @@
 {
   "name": "cwise",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Component-wise operations on ndarrays",
   "main": "cwise.js",
   "browser": "lib/cwise-esprima.js",
@@ -10,7 +10,7 @@
   "dependencies": {
     "cwise-parser": "^1.0.0",
     "cwise-compiler": "^1.0.0",
-    "static-module": "^0.0.7",
+    "static-module": "^1.0.0",
     "uglify-js": "2.4.13"
   },
   "devDependencies": {
