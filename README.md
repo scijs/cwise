@@ -52,8 +52,8 @@ To use the library, you pass it an object with the following fields:
     + `"scalar"`: A globally broadcasted scalar argument
     + `"index"`: (Hidden) An array representing the current index of the element being processed.  Initially [0,0,...] in the pre block and set to some undefined value in the post block.
     + `"shape"`: (Hidden) An array representing the shape of the arrays being processed
-    + An object representing a "blocked" array:
-        + `blockIndices` The number of indices (from the front of the array shape) to use for blocks. Negative integers take indices from the back of the array shape.
+    + An object representing a "blocked" array (for example a colour image, an array of matrices, etc.):
+        + `blockIndices` The number of indices (from the front of the array shape) to expose in the body (rather than iterating over them). Negative integers take indices from the back of the array shape.
     + (Hidden) An object containing two properties representing an offset pointer from an array argument.
         + `offset` An array representing the relative offset of the object
         + `array` The index of an array parameter
