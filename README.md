@@ -52,7 +52,9 @@ To use the library, you pass it an object with the following fields:
     + `"scalar"`: A globally broadcasted scalar argument
     + `"index"`: (Hidden) An array representing the current index of the element being processed.  Initially [0,0,...] in the pre block and set to some undefined value in the post block.
     + `"shape"`: (Hidden) An array representing the shape of the arrays being processed
-    + (Hidden) An object containing two properties reprsenting an offset pointer from an array argument.
+    + An object representing a "blocked" array:
+        + `blockIndices` The number of indices (from the front of the array shape) to use for blocks. Negative integers take indices from the back of the array shape.
+    + (Hidden) An object containing two properties representing an offset pointer from an array argument.
         + `offset` An array representing the relative offset of the object
         + `array` The index of an array parameter
 * `pre`: A function to be executed before starting the loop
@@ -131,6 +133,21 @@ var mgrid = cwise({
 
 //Example usage:
 var X = mgrid(ndarray(new Float32Array(128)))
+```
+
+### Compute 2D vector norms
+```javascript
+var norm2D = cwise({
+  args: ["array", {blockIndices: -1}],
+  body: function(o, i) {
+    o = Math.sqrt(i[0]*i[0] + i[1]*i[1])
+  }
+})
+
+//Example usage:
+var o = ndarray([0, 0, 0], [3])
+norm2D(o, ndarray([1, 2, 3, 4, 5, 6], [3,2]))
+// o.data == [ 2.23606797749979, 5, 7.810249675906654 ]
 ```
 
 ### Check if any element is set
