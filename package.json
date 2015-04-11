@@ -1,6 +1,6 @@
 {
   "name": "cwise",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Component-wise operations on ndarrays",
   "main": "cwise.js",
   "browser": "lib/cwise-esprima.js",
