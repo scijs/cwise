@@ -54,7 +54,7 @@ To use the library, you pass it an object with the following fields:
     + `"shape"`: (Hidden) An array representing the shape of the arrays being processed
     + An object representing a "blocked" array (for example a colour image, an array of matrices, etc.):
         + `blockIndices` The number of indices (from the front of the array shape) to expose in the body (rather than iterating over them). Negative integers take indices from the back of the array shape.
-    + (Hidden) An object containing two properties representing an offset pointer from an array argument.
+    + (Hidden) An object containing two properties representing an offset pointer from an array argument. Note that cwise does not implement any boundary conditions.
         + `offset` An array representing the relative offset of the object
         + `array` The index of an array parameter
 * `pre`: A function to be executed before starting the loop
