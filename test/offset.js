@@ -1,5 +1,5 @@
 var cwise = require("cwise")
-  , ndarray = require("ndarray")
+var ndarray = require("ndarray")
 
 if(typeof test === "undefined") {
   test = require("tape")
@@ -30,7 +30,7 @@ test("offset", function(t) {
       P.set(i, 0)
     }
     Q.set(P.shape[0], P.shape[0])
-    binary(P, Q, t)
+    binary(P, Q.hi(Q.shape[0]-1), t)
     for(var i=0; i<P.shape[0]; ++i) {
       t.equals(P.get(i), 2*i+1001)
     }
@@ -42,7 +42,7 @@ test("offset", function(t) {
   testBinary1D(ndarray(new Int32Array(0)), ndarray(new Int32Array(1)))
   testBinary1D(ndarray(new Int32Array(1)), ndarray(new Int32Array(2)))
   testBinary1D(A, B)
-  testBinary1D(A.lo(32), B)
+  testBinary1D(A.lo(32), B.lo(32))
   testBinary1D(A.step(-1), B)
   testBinary1D(A, B.step(-1))
   
@@ -51,7 +51,7 @@ test("offset", function(t) {
   testBinary1D(ndarray(new DumbStorage(0)), ndarray(new DumbStorage(1)))
   testBinary1D(ndarray(new DumbStorage(1)), ndarray(new DumbStorage(2)))
   testBinary1D(A, B)
-  testBinary1D(A.lo(32), B)
+  testBinary1D(A.lo(32), B.lo(32))
   testBinary1D(A.step(-1), B)
   testBinary1D(A, B.step(-1))
   

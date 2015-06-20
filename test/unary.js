@@ -1,5 +1,5 @@
 var cwise = require("cwise")
-  , ndarray = require("ndarray")
+var ndarray = require("ndarray")
 
 if(typeof test === "undefined") {
   test = require("tape")
