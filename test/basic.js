@@ -4,6 +4,10 @@ var cwise = require("..")
   , test = require("tape")
 
 test("only allow same shape", function(t) {
+  var op1 = cwise({
+    args: ["array"],
+    body: function(a) { a = 1 }
+  })
   var op2 = cwise({
     args: ["array", "array"],
     body: function(a, b) { a = b }
@@ -21,6 +25,7 @@ test("only allow same shape", function(t) {
     body: function(a, b) { a = b[1] }
   })
   
+  t.doesNotThrow(function() { op1(ndarray([1,2,3],[3])) })
   t.doesNotThrow(function() { op2(ndarray([1,2,3],[3]), ndarray([1,2,3],[3])) })
   t.doesNotThrow(function() { op2(ndarray([1,2,3,4,5,6],[3,2]), ndarray([1,2,3,4,5,6],[3,2])) })
   t.doesNotThrow(function() { op3(ndarray([1,2,3],[3]), ndarray([1,2,3],[3]), ndarray([1,2,3],[3])) })
