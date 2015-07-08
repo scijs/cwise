@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "ndarray": "^1.0.13",
-    "browserify": "^3.44.2",
+    "browserify": "^10.2.4",
     "tape": "^4.0.0"
   },
   "scripts": {
