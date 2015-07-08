@@ -2,8 +2,7 @@ cwise
 =====
 This library can be used to generate cache efficient map/reduce operations for [ndarrays](http://github.com/mikolalysenko/ndarray).
 
-[![build status](https://secure.travis-ci.org/scijs/cwise.png)](http://travis-ci
-.org/scijs/cwise)
+[![build status](https://secure.travis-ci.org/scijs/cwise.png)](http://travis-ci.org/scijs/cwise)
 
 # Examples
 For brevity, we will assume the following precedes each example: 
