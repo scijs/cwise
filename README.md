@@ -2,21 +2,20 @@ cwise
 =====
 This library can be used to generate cache efficient map/reduce operations for [ndarrays](http://github.com/mikolalysenko/ndarray).
 
-[![stable](https://rawgithub.com/hughsk/stability-badges/master/dist/stable.svg)](http://github.com/hughsk/stability-badges)
+[![build status](https://secure.travis-ci.org/scijs/cwise.png)](http://travis-ci
+.org/scijs/cwise)
 
-Usage
-=====
-First, install using npm:
-
-    npm install cwise
-    
-Then you can create an ndarray operation as follows:
-
+# Examples
+For brevity, we will assume the following precedes each example: 
 ```javascript
 //Import libraries
 var cwise = require("cwise")
   , ndarray = require("ndarray")
+```
 
+## Adding two arrays
+The array equivalent of `+=`:
+```javascript
 //Create operation
 var addeq = cwise({
     args: ["array", "array"],
@@ -43,8 +42,132 @@ for(var i=0; i<X.shape[0]; ++i) {
 }
 ```
 
-`require("cwise")(user_args)`
------------------------------
+## Multiply an array with a scalar
+```javascript
+var muls = cwise({
+  args: ["array", "scalar"],
+  body: function(a, s) {
+    a *= s
+  }
+})
+
+//Example usage:
+muls(array, 2.0)
+```
+
+## Initialize an array with a grid with the first index
+```javascript
+var mgrid = cwise({
+  args: ["index", "array"],
+  body: function(i, a) {
+    a = i[0]
+  }
+})
+
+//Example usage:
+var X = mgrid(ndarray(new Float32Array(128)))
+```
+
+## Compute 2D vector norms using blocks
+```javascript
+var norm2D = cwise({
+  args: ["array", {blockIndices: -1}],
+  body: function(o, i) {
+    o = Math.sqrt(i[0]*i[0] + i[1]*i[1])
+  }
+})
+
+//Example usage:
+var o = ndarray([0, 0, 0], [3])
+norm2D(o, ndarray([1, 2, 3, 4, 5, 6], [3,2]))
+// o.data == [ 2.23606797749979, 5, 7.810249675906654 ]
+```
+Note that in the above, `i` is not an actual `Array`, the indexing notation is just syntactic sugar.
+
+## Apply a stencil to an array
+```javascript
+var laplacian = cwise({
+  args:["array", "array", {offset:[0,1], array:1}, {offset:[0,-1], array:1}, {offset:[1,0], array:1}, {offset:[-1,0], array:1}],
+  body:function(a, c, n, s, e, w) {
+    a = 0.25 * (n + s + e + w) - c
+  }
+})
+
+laplacian(next, prev)
+```
+
+## Compute the sum of all the elements in an array
+```javascript
+var sum = cwise({
+  args: ["array"],
+  pre: function() {
+    this.sum = 0
+  },
+  body: function(a) {
+    this.sum += a
+  },
+  post: function() {
+    return this.sum
+  }
+})
+  
+//Usage:
+s = sum(array)
+```
+Note that variables stored in `this` are common to all three code blocks. Also note that one should not treat `this` as an actual object (for example, one should not attempt to return `this`).
+
+## Check if any element is set
+```javascript
+var any = cwise({
+  args: ["array"],
+  body: function(a) {
+    if(a) {
+      return true
+    }
+  },
+  post: function() {
+    return false
+  }
+})
+
+//Usage
+if(any(array)) {
+  // ...
+}
+```
+
+## Compute the index of the maximum element of an array:
+```javascript
+var argmin = cwise({
+  args: ["index", "array"],
+  pre: function(index) {
+    this.min_v = Number.POSITIVE_INFINITY
+    this.min_index = index.slice(0)
+  },
+  body: function(index, a) {
+    if(a < this.min_v) {
+      this.min_v = a
+      for(var i=0; i<index.length; ++i) {
+        this.min_index[i] = index[i]
+      }
+    }
+  },
+  post: function() {
+    return this.min_index
+  }
+})
+
+//Usage:
+argmin(X)
+```
+
+# Install
+Install using [npm](https://www.npmjs.com/):
+
+    npm install cwise
+
+# API
+#### `require("cwise")(user_args)`
 To use the library, you pass it an object with the following fields:
 
 * `args`: (Required) An array describing the type of the arguments passed to the body.  These may be one of the following:
@@ -105,140 +228,13 @@ If bundle size is an issue for you, it is possible to use cwise as a [browserify
 
 Then when you use the module with browserify, only the cwise-compile submodule will get loaded into your script instead of all of esprima. Note that this step is optional and the library will still work in the browser even if you don't use a transform.
 
-Examples
-========
-Here are a few recipes showing how to use cwise to implement some common operations to get you started:
+# FAQ
 
-### Multiply an array with a scalar
-```javascript
-var muls = cwise({
-  args: ["array", "scalar"],
-  body: function(a, s) {
-    a *= s
-  }
-})
-
-//Example usage:
-muls(array, 2.0)
-```
-
-### Initialize an array with a grid with the first index
-```javascript
-var mgrid = cwise({
-  args: ["index", "array"],
-  body: function(i, a) {
-    a = i[0]
-  }
-})
-
-//Example usage:
-var X = mgrid(ndarray(new Float32Array(128)))
-```
-
-### Compute 2D vector norms
-```javascript
-var norm2D = cwise({
-  args: ["array", {blockIndices: -1}],
-  body: function(o, i) {
-    o = Math.sqrt(i[0]*i[0] + i[1]*i[1])
-  }
-})
-
-//Example usage:
-var o = ndarray([0, 0, 0], [3])
-norm2D(o, ndarray([1, 2, 3, 4, 5, 6], [3,2]))
-// o.data == [ 2.23606797749979, 5, 7.810249675906654 ]
-```
-
-### Check if any element is set
-```javascript
-var any = cwise({
-  args: ["array"],
-  body: function(a) {
-    if(a) {
-      return true
-    }
-  },
-  post: function() {
-    return false
-  }
-})
-
-//Usage
-if(any(array)) {
-  // ...
-}
-```
-
-### Apply a stencil to an array
-```javascript
-var laplacian = cwise({
-  args:["array", "array", {offset:[0,1], array:1}, {offset:[0,-1], array:1}, {offset:[1,0], array:1}, {offset:[-1,0], array:1}],
-  body:function(a, c, n, s, e, w) {
-    a = 0.25 * (n + s + e + w) - c
-  }
-})
-
-laplacian(next, prev)
-```
-
-### Compute the sum of all the elements in an array
-```javascript
-var sum = cwise({
-  args: ["array"],
-  pre: function() {
-    this.sum = 0
-  },
-  body: function(a) {
-    this.sum += a
-  },
-  post: function() {
-    return this.sum
-  }
-})
-  
-//Usage:
-s = sum(array)
-```
-Note that variables stored in `this` are common to all the blocks
-
-
-### Compute the index of the maximum element of an array:
-```javascript
-var argmin = cwise({
-  args: ["index", "array"],
-  pre: function(index) {
-    this.min_v = Number.POSITIVE_INFINITY
-    this.min_index = index.slice(0)
-  },
-  body: function(index, a) {
-    if(a < this.min_v) {
-      this.min_v = a
-      for(var i=0; i<index.length; ++i) {
-        this.min_index[i] = index[i]
-      }
-    }
-  },
-  post: function() {
-    return this.min_index
-  }
-})
-
-//Usage:
-argmin(X)
-```
-
-FAQ
-===
-
-Is it fast?
------------
+## Is it fast?
 [Yes](https://github.com/mikolalysenko/ndarray-experiments)
 
-How does it work?
------------------
+## How does it work?
 You can think of cwise as a type of macro language on top of JavaScript.  Internally, cwise uses node-falafel to parse the functions you give it and sanitize their arguments.  At run time, code for each array operation is generated lazily depending on the ordering and stride of the input arrays so that you get optimal cache performance.  These compiled functions are then memoized for future calls to the same function.  As a result, you should reuse array operations as much as possible to avoid wasting time and memory regenerating common functions.
 
-Credits
-=======
+# License
 (c) 2013 Mikola Lysenko. MIT License
