@@ -11,11 +11,11 @@
     "cwise-parser": "^1.0.0",
     "cwise-compiler": "^1.1.1",
     "static-module": "^1.0.0",
-    "uglify-js": "2.4.13"
+    "uglify-js": "^2.6.0"
   },
   "devDependencies": {
     "ndarray": "^1.0.13",
-    "browserify": "^10.2.4",
+    "browserify": "^13.0.0",
     "tape": "^4.0.0"
   },
   "scripts": {
