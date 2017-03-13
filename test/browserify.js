@@ -5,7 +5,7 @@ var vm = require("vm")
 var path = require("path")
 var tape = require("tape")
 
-var cases = [ "unary", "binary", "offset" ]
+var cases = [ "unary", "binary", "offset", "fill" ]
 
 bundleCasesFrom(0)
 
