@@ -20,7 +20,7 @@
 		"tape": "^4.0.0"
 	},
 	"scripts": {
-		"test": "tape test/*.js",
+		"test": "gulp && tape test/*.js",
 		"pretest": "rm -f node_modules/cwise && ln -s .. node_modules/cwise"
 	},
 	"repository": {
