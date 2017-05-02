@@ -1,4 +1,5 @@
-import * as staticModule from "static-module";
+import {} from 'node';
+const staticModule = require("static-module");
 import parse from "cwise-parser";
 import * as uglify from "uglify-js";
 import { ArgType } from "cwise-compiler";
