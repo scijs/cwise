@@ -1,4 +1,3 @@
-sudo: false
 language: node_js
 node_js:
   - 0.12
@@ -7,6 +6,3 @@ node_js:
 
 before_install:
   - npm install npm@latest -g
-
-script:
-  - tape test/*.js
