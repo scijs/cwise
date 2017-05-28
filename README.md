@@ -135,7 +135,7 @@ if(any(array)) {
 }
 ```
 
-## Compute the index of the maximum element of an array:
+## Compute the index of the minimum element of an array:
 ```javascript
 var argmin = cwise({
   args: ["index", "array"],
