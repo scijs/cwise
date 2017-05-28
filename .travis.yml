@@ -3,6 +3,3 @@ node_js:
   - 0.12
   - 4
   - 5
-
-before_install:
-  - npm install npm@latest -g
