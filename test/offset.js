@@ -1,4 +1,4 @@
-var cwise = require("cwise")
+var cwise = require("..")
 var ndarray = require("ndarray")
 
 if(typeof test === "undefined") {
