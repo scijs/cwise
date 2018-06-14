@@ -3,7 +3,7 @@ var browserify = require('browserify');
 
 var cases = [ "basic", "unary", "binary", "offset", "fill" ]
 
-cases.forEach(test => {
+cases.forEach(function(test) {
     browserify(__dirname + '/' + test + '.js')
         .bundle()
         .pipe(run())
