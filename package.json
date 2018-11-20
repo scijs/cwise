@@ -8,7 +8,6 @@
     "test": "test"
   },
   "dependencies": {
-    "acorn": "^6.0.4",
     "cwise-compiler": "^1.1.1",
     "cwise-parser": "^1.0.0",
     "static-module": "^3.0.0",
