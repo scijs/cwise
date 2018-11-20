@@ -8,8 +8,9 @@
     "test": "test"
   },
   "dependencies": {
-    "cwise-parser": "^1.0.0",
+    "acorn": "^6.0.4",
     "cwise-compiler": "^1.1.1",
+    "cwise-parser": "^1.0.0",
     "static-module": "^3.0.0",
     "uglify-js": "^2.6.0"
   },
