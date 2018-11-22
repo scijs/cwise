@@ -8,13 +8,13 @@
     "test": "test"
   },
   "dependencies": {
-    "acorn": "^6.0.4",
     "cwise-compiler": "^1.1.1",
     "cwise-parser": "^1.0.0",
     "static-module": "^3.0.0",
     "uglify-js": "^2.6.0"
   },
   "devDependencies": {
+    "acorn": "^6.0.4",
     "ndarray": "^1.0.13",
     "browserify": "^13.0.0",
     "tape": "^4.0.0"
