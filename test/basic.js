@@ -1,5 +1,5 @@
 "use strict"
-var cwise = require("..")
+var cwise = require("../cwise")
   , ndarray = require("ndarray")
   , test = require("tape")
 
@@ -24,7 +24,7 @@ test("only allow same shape", function(t) {
     args: ["array", {blockIndices: -1}],
     body: function(a, b) { a = b[1] }
   })
-  
+
   t.doesNotThrow(function() { op1(ndarray([1,2,3],[3])) })
   t.doesNotThrow(function() { op2(ndarray([1,2,3],[3]), ndarray([1,2,3],[3])) })
   t.doesNotThrow(function() { op2(ndarray([1,2,3,4,5,6],[3,2]), ndarray([1,2,3,4,5,6],[3,2])) })
@@ -42,6 +42,6 @@ test("only allow same shape", function(t) {
   t.throws(function() { op2block_neg(ndarray([1,2],[2]), ndarray([1,2,3,4,5,6],[3,2])) })
   t.throws(function() { op2block_pos(ndarray([1,2,3,4,5,6],[3,2]), ndarray([1,2,3,4],[2,2])) })
   t.throws(function() { op2block_neg(ndarray([1,2,3,4,5,6],[3,2]), ndarray([1,2,3,4],[2,2])) })
-  
+
   t.end()
 })

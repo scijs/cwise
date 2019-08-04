@@ -1,4 +1,4 @@
-var cwise = require("cwise")
+var cwise = require("../cwise")
 var ndarray = require("ndarray")
 
 if(typeof test === "undefined") {
@@ -22,7 +22,7 @@ test("offset", function(t) {
       a = c + b + 1000
     }
   })
-  
+
   function testBinary1D(P, Q, testName) {
     t.equals(P.shape[0], Q.shape[0]-1, testName + "; shape")
     for(var i=0; i<P.shape[0]; ++i) {
@@ -39,17 +39,17 @@ test("offset", function(t) {
     }
     t.pass(testName)
   }
-  
+
   var A = ndarray(new Int32Array(128))
   var B = ndarray(new Int32Array(129))
-  
+
   testBinary1D(ndarray(new Int32Array(0)), ndarray(new Int32Array(1)), "length==0")
   testBinary1D(ndarray(new Int32Array(1)), ndarray(new Int32Array(2)), "length==1")
   testBinary1D(A, B, "A, B")
   testBinary1D(A.lo(32), B.lo(32), "A.lo(32), B.lo(32)")
   testBinary1D(A.step(-1), B, "A.step(-1), B")
   testBinary1D(A, B.step(-1), "A, B.step(-1)")
-  
+
   A = ndarray(new DumbStorage(128))
   B = ndarray(new DumbStorage(129))
   testBinary1D(ndarray(new DumbStorage(0)), ndarray(new DumbStorage(1)), "DS; length==0")
@@ -58,6 +58,6 @@ test("offset", function(t) {
   testBinary1D(A.lo(32), B.lo(32), "DS; A.lo(32), B.lo(32)")
   testBinary1D(A.step(-1), B, "DS; A.step(-1), B")
   testBinary1D(A, B.step(-1), "DS; A, B.step(-1)")
-  
+
   t.end()
 })

@@ -16,11 +16,10 @@
   "devDependencies": {
     "ndarray": "^1.0.13",
     "browserify": "^13.0.0",
-    "tape": "^4.0.0"
+    "tape": "^4.11.0"
   },
   "scripts": {
-    "test": "tape test/*.js",
-    "pretest": "rm -f node_modules/cwise && ln -s .. node_modules/cwise"
+    "test": "tape test/*.js"
   },
   "repository": {
     "type": "git",

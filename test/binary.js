@@ -1,4 +1,4 @@
-var cwise = require("cwise")
+var cwise = require("../cwise")
 var ndarray = require("ndarray")
 
 if(typeof test === "undefined") {
@@ -22,7 +22,7 @@ test("binary", function(t) {
       a = b + 1001
     }
   })
-  
+
   function testBinary1D(P, Q, testName) {
     t.equals(P.shape[0], Q.shape[0], testName + "; shape")
     for(var i=0; i<P.shape[0]; ++i) {
@@ -38,17 +38,17 @@ test("binary", function(t) {
     }
     t.pass(testName)
   }
-  
+
   var A = ndarray(new Int32Array(128))
   var B = ndarray(new Int32Array(128))
-  
+
   testBinary1D(ndarray(new Int32Array(0)), ndarray(new Int32Array(0)), "length==0")
   testBinary1D(ndarray(new Int32Array(1)), ndarray(new Int32Array(1)), "length==1")
   testBinary1D(A, B, "A, B")
   testBinary1D(A.lo(32), B.hi(128-32), "A.lo(32), B.hi(128-32)")
   testBinary1D(A.step(-1), B, "A.step(-1), B")
   testBinary1D(A, B.step(-1), "A, B.step(-1)")
-  
+
   A = ndarray(new DumbStorage(128))
   B = ndarray(new DumbStorage(128))
   testBinary1D(ndarray(new DumbStorage(0)), ndarray(new DumbStorage(0)), "DS; length==0")
@@ -57,11 +57,11 @@ test("binary", function(t) {
   testBinary1D(A.lo(32), B.hi(128-32), "DS; A.lo(32), B.hi(128-32)")
   testBinary1D(A.step(-1), B, "DS; A.step(-1), B")
   testBinary1D(A, B.step(-1), "DS; A, B.step(-1)")
-    
-  
+
+
   var X = ndarray(new Int32Array(64*64), [64,64])
   var Y = ndarray(new Int32Array(64*64), [64,64])
-  
+
   function testBinary2D(P, Q, testName) {
     for(var i=0; i<X.shape[0]; ++i) {
       for(var j=0; j<X.shape[1]; ++j) {
@@ -88,8 +88,8 @@ test("binary", function(t) {
     }
     t.pass(testName)
   }
-  
-  
+
+
   testBinary2D(X, Y, "X, Y")
   testBinary2D(X.transpose(1,0), Y.transpose(1,0), "X.T, Y.T")
   testBinary2D(X.transpose(1,0), Y, "X.T, Y")
@@ -100,6 +100,6 @@ test("binary", function(t) {
   testBinary2D(X.transpose(1,0).hi(0,32), Y.hi(0,32), "X.T.hi(0,32), Y.hi(0,32)")
   testBinary2D(X.transpose(1,0).hi(33,33), Y.hi(33,33), "X.T.hi(33,33), Y.hi(33,33)")
   testBinary2D(X.transpose(1,0).hi(31,31), Y.hi(31,31), "X.T.hi(31,31), Y.hi(31,31)")
-  
+
   t.end()
 })
