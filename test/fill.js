@@ -10,7 +10,7 @@ test("fill", function(t) {
   var fill = cwise({
     args: ["index", "array", "scalar"],
     body: function(idx, out, f) {
-      out = f.apply(undefined, idx)
+      out = f.apply(null, idx)
     }
   })
 
