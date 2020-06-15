@@ -10,7 +10,7 @@
   "dependencies": {
     "cwise-parser": "^1.0.0",
     "cwise-compiler": "^1.1.1",
-    "static-module": "^1.0.0",
+    "static-module": "git://github.com/browserify/static-module.git#3c18ee194fdb674ce590a65ace4e5e17c775733f",
     "uglify-js": "^2.6.0"
   },
   "devDependencies": {
